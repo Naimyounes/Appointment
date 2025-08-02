@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حجز موعد - عيادة الدكتور أحمد بن علي</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+        
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .main-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 140px);
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .form-header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .form-header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-stethoscope"></i>
+                عيادة الدكتور أحمد بن علي
+            </div>
+            <a href="{{ url_for('index') }}" class="back-btn">
+                <i class="fas fa-arrow-right"></i>
+                العودة للرئيسية
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="form-header">
+                <h1>
+                    <i class="fas fa-calendar-plus"></i>
+                    حجز موعد
+                </h1>
+                <p>املأ النموذج أدناه لحجز موعدك مع الدكتور أحمد بن علي</p>
+            </div>
+        
+        <!-- عرض الرسائل -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'success' if category == 'success' else 'error' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST" action="{{ url_for('book') }}">
+            <div class="form-group">
+                <label for="name">الاسم الكامل <span class="required">*</span></label>
+                <input type="text" id="name" name="name" required 
+                       placeholder="أدخل اسمك الكامل" 
+                       value="{{ request.form.name if request.form.name }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">رقم الهاتف <span class="required">*</span></label>
+                <input type="tel" id="phone" name="phone" required 
+                       placeholder="مثال: 0551234567" 
+                       value="{{ request.form.phone if request.form.phone }}">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="date">تاريخ الموعد <span class="required">*</span></label>
+                    <input type="date" id="date" name="date" required 
+                           value="{{ request.form.date if request.form.date }}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="time">وقت الموعد <span class="required">*</span></label>
+                    <input type="time" id="time" name="time" required 
+                           value="{{ request.form.time if request.form.time }}">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="note">سبب الزيارة (اختياري)</label>
+                <textarea id="note" name="note" 
+                          placeholder="اكتب سبب الزيارة أو أي ملاحظات إضافية...">{{ request.form.note if request.form.note }}</textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-calendar-check"></i>
+                حجز الموعد
+            </button>
+        </form>
+        </div>
+    </div>
+    
+    <script>
+        // تعيين الحد الأدنى للتاريخ إلى اليوم
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInput = document.getElementById('date');
+            const timeInput = document.getElementById('time');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.setAttribute('min', today);
+            
+            // التحقق من الوقت عند تغيير التاريخ
+            dateInput.addEventListener('change', function() {
+                const selectedDate = this.value;
+                const currentDate = new Date().toISOString().split('T')[0];
+                
+                if (selectedDate === currentDate) {
+                    // إذا كان التاريخ المختار هو اليوم، تعيين الحد الأدنى للوقت مع هامش 30 دقيقة
+                    const now = new Date();
+                    const minimumTime = new Date(now.getTime() + 30 * 60 * 1000); // إضافة 30 دقيقة
+                    const minTimeString = minimumTime.getHours().toString().padStart(2, '0') + ':' + 
+                                         minimumTime.getMinutes().toString().padStart(2, '0');
+                    timeInput.setAttribute('min', minTimeString);
+                } else {
+                    // إزالة الحد الأدنى للوقت للأيام المستقبلية
+                    timeInput.removeAttribute('min');
+                }
+            });
+        });
+        
+        // التحقق من صحة النموذج قبل الإرسال
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            
+            if (!name || !phone || !date || !time) {
+                e.preventDefault();
+                alert('يرجى ملء جميع الحقول المطلوبة');
+                return false;
+            }
+            
+            // التحقق من صحة رقم الهاتف (رقم جزائري)
+            const phoneRegex = /^0(5|6|7)[0-9]{8}$/;
+            const cleanedPhone = phone.replace(/\s+/g, '');
+
+            if (!phoneRegex.test(cleanedPhone)) {
+                e.preventDefault();
+                alert('يرجى إدخال رقم هاتف جزائري صحيح (مثال: 0551234567)');
+                return false;
+            }
+            
+            // التحقق من أن التاريخ والوقت ليس في الماضي أو قريب جداً
+            const selectedDate = new Date(date + 'T' + time);
+            const now = new Date();
+            const minimumBookingTime = new Date(now.getTime() + 30 * 60 * 1000); // إضافة 30 دقيقة
+            
+            if (selectedDate <= minimumBookingTime) {
+                e.preventDefault();
+                alert('يجب حجز الموعد قبل 30 دقيقة على الأقل من الوقت الحالي');
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>
